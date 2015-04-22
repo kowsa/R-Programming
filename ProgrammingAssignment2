@@ -1,41 +1,42 @@
-Enter file contents here
+# makeCacheMatrix function works with matrix x.
+# stores the inverse matrix
+# caches the inverse matrix
+
 makeCacheMatrix <- function(x = matrix()) {
   #objects in R are passed by value
-
   m<-NULL
+  # set the matrix x
   set<-function(y){
            #double arrow operator can modify variables in parent levels
-
            x<<-y
            m<<-NULL
                  }
+  # get matrix x
   get<-function() x
       #solve returns inverse of x
       #solve handles only square matrix
 
       setmatrix<-function(solve) m<<- solve
       getmatrix<-function() m
+      #list of methods
       list(set=set, get=get,setmatrix=setmatrix, getmatrix=getmatrix)
 }
 
 #The function cacheSolve returns the inverse of the matrix created with the makeCacheMatrix function.
-
 #If the cached inverse is available cacheSolve retrieves it, and if not, it computes, caches, and returns it.
 
 cacheSolve <- function(x=matrix(), ...) {
-     
+  #returns the matrix inverse of X
+  #checks to see if cached inverse available
     m<-x$getmatrix()
           if(!is.null(m)){
              message("getting cached data")
              return(m)
                         }
      # Returns original matrix
-
            matrix<-x$get()
            m<-solve(matrix, ...)
-
-       #cached value can be changed only via set function
-
+  #cached value can be changed only via set function
         x$setmatrix(m)
         m
 }
